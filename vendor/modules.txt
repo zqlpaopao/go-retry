@@ -1,0 +1,3 @@
+# github.com/zqlpaopao/tool v0.0.0-20220426025432-d18a653eda18
+## explicit
+github.com/zqlpaopao/tool/retry/pkg

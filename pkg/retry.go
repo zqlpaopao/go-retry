@@ -78,3 +78,8 @@ func (r *RetryManager) execute(retryableFun RetryableFunc, CustomParams ...inter
 	}
 	return index, executeResult
 }
+
+//Release free all goroutine pool
+func(r *RetryManager)Release(){
+	r.retryConf.pool.release()
+}

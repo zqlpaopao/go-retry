@@ -32,6 +32,7 @@ func (t *Task) Execute() {
 
 /*****************************************协程池角色*******************************/
 type pool struct {
+	tag       chan struct{}
 	receiveCh chan *Task
 	runCh     chan *Task
 	workerNum int
@@ -44,6 +45,7 @@ type pool struct {
 //-- ----------------------------
 func NewPool(n int) *pool {
 	return &pool{
+		tag:       make(chan struct{}),
 		receiveCh: make(chan *Task),
 		runCh:     make(chan *Task),
 		workerNum: n,
@@ -80,10 +82,12 @@ func (p *pool) Run() {
 	for task := range p.receiveCh {
 		p.runCh <- task
 	}
+	p.tag <- struct{}{}
 }
 
 //release free all goroutine pool
 func (p *pool) release() {
 	close(p.receiveCh)
+	<-p.tag
 	close(p.runCh)
 }

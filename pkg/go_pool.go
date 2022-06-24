@@ -81,3 +81,9 @@ func (p *pool) Run() {
 		p.runCh <- task
 	}
 }
+
+//release free all goroutine pool
+func (p *pool) release() {
+	close(p.receiveCh)
+	close(p.runCh)
+}

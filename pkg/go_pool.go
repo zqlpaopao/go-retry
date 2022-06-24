@@ -33,9 +33,9 @@ func (t *Task) Execute() {
 /*****************************************协程池角色*******************************/
 type pool struct {
 	tag       chan struct{}
+	workerNum int
 	receiveCh chan *Task
 	runCh     chan *Task
-	workerNum int
 }
 
 //NewPool -- ----------------------------
